@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  billet-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      # Add your environment variables here
+      # - SUPABASE_URL=your_supabase_url
+      # - SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+      # - JWT_SECRET=your_jwt_secret
+      # - EMAIL_HOST=smtp.sendgrid.net
+      # - EMAIL_PORT=587
+      # - EMAIL_USER=apikey
+      # - EMAIL_PASS=your_sendgrid_api_key
+      # - FRONTEND_URL=https://yourdomain.com
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      # Mount logs directory for persistent logging
+      - ./logs:/app/logs
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - billet-app
+    restart: unless-stopped
+    profiles:
+      - nginx
