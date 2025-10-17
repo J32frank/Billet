@@ -1,16 +1,15 @@
 {
-  "version": 2,
   "builds": [
+    {
+      "src": "api/server.js",
+      "use": "@vercel/node"
+    },
     {
       "src": "billet-frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "billet-frontend/dist"
       }
-    },
-    {
-      "src": "api/server.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -20,15 +19,34 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/billet-frontend/$1"
+      "dest": "/billet-frontend/dist/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/billet-frontend/dist/index.html"
     }
   ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "api/server.js": {
-      "maxDuration": 30
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
     }
-  }
+  ]
 }

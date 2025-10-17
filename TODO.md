@@ -1,35 +1,23 @@
-# Deployment Readiness Checklist
+# Vercel Deployment Setup Tasks
 
-## Environment Variables
-- [ ] Check for .env files in billet-backend/ and billet-frontend/
-- [ ] Verify required environment variables are documented
+## Completed
+- [x] Analyze workspace structure (monorepo with React frontend and Express backend)
+- [x] Update vercel.json with builds, routes, and security headers
+- [x] Remove unnecessary files for Vercel deployment (Docker, PM2, production configs)
+- [x] Install Vercel CLI
+- [x] Test local Vercel deployment with `vercel dev`
 
-## Database Setup
-- [ ] Verify admin-database-updates.sql exists and is executable
-- [ ] Check database connection configuration
+## Pending Tasks
+- [ ] Deploy to Vercel production (requires user to run `vercel` or connect GitHub)
+- [ ] Set up environment variables in Vercel dashboard
+- [ ] Configure custom domain (optional)
 
-## Application Configuration
-- [ ] Verify deploy.sh is executable and correct
-- [ ] Check package.json production scripts
-- [ ] Verify Docker and nginx configurations
-- [ ] Check if health endpoint (/health) is implemented
-
-## Security & Performance
-- [ ] Review JWT configuration
-- [ ] Check CORS settings
-- [ ] Verify rate limiting (if implemented)
-- [ ] Check for security headers (Helmet)
-
-## Testing
-- [ ] Attempt to start backend briefly to check for errors
-- [ ] Test health endpoint if possible
-- [ ] Verify build processes work
-
-## Monitoring & Logs
-- [ ] Check PM2 ecosystem config
-- [ ] Verify logging setup
-- [ ] Check for error handling middleware
-
-## Final Verification
-- [ ] Run basic connectivity tests
-- [ ] Verify all configurations are production-ready
+## Files Removed
+- docker-compose.yml (Docker setup not needed for Vercel)
+- Dockerfile (Docker setup not needed for Vercel)
+- nginx.conf (Nginx config not needed for Vercel)
+- deploy.sh (Deployment script not needed for Vercel)
+- ecosystem.config.js (PM2 config not needed for Vercel)
+- PRODUCTION_README.md (Production setup not needed for Vercel)
+- .dockerignore (Docker ignore not needed for Vercel)
+- start-admin-stats.sh (Shell script not needed for Vercel)
