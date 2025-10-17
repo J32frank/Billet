@@ -12,18 +12,14 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/server.js"
+      "source": "/api/(.*)",
+      "destination": "/api/server.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/billet-frontend/dist/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/billet-frontend/dist/index.html"
+      "source": "/(.*)",
+      "destination": "/billet-frontend/dist/$1"
     }
   ],
   "headers": [
