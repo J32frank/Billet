@@ -1,17 +1,11 @@
 {
-  "builds": [
-    {
-      "src": "api/server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "billet-frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "billet-frontend/dist"
-      }
+  "functions": {
+    "api/server.js": {
+      "runtime": "nodejs18.x"
     }
-  ],
+  },
+  "buildCommand": "cd billet-frontend && npm run build",
+  "outputDirectory": "billet-frontend/dist",
   "rewrites": [
     {
       "source": "/api/(.*)",
