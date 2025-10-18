@@ -1,11 +1,26 @@
 {
-  "devDependencies": {
-    "concurrently": "^9.2.1"
-  },
   "name": "billet",
   "version": "1.0.0",
   "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/J32frank/billet#readme",
+  "bugs": {
+    "url": "https://github.com/J32frank/billet/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J32frank/billet.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "test-connection.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run backend-dev\" \"npm run frontend-dev\"",
+    "backend-dev": "cd billet-backend && npm run dev",
+    "frontend-dev": "cd billet-frontend && npm run dev"
+  },
   "dependencies": {
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
@@ -32,14 +47,7 @@
     "yargs": "^17.7.2",
     "yargs-parser": "^21.1.1"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run backend-dev\" \"npm run frontend-dev\"",
-    "backend-dev": "cd billet-backend && npm run dev",
-    "frontend-dev": "cd billet-frontend && npm run dev"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
