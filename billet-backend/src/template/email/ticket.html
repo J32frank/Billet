@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="ticket.css">
+        
+</head>
+<body>
+    <div class="header">
+        <h1>🎟️ Your Cinema Ticket</h1>
+        <p>We're excited to see you at the event!</p>
+    </div>
+
+    <div class="ticket-card">
+        <h2>Hello {{buyerName}},</h2>
+        <p>Your ticket for <strong>{{eventName}}</strong> is ready for download.</p>
+        
+        <div class="info-box">
+            <h3>🎬 Event Details</h3>
+            <p><strong>Event:</strong> {{eventName}}</p>
+            <p><strong>Date:</strong> {{eventDate}}</p>
+            <p><strong>Location:</strong> Cinema Venue</p>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 Ticket Information</h3>
+            <p><strong>Ticket #:</strong> {{ticketNumber}}</p>
+            <p><strong>Buyer:</strong> {{buyerName}}</p>
+            <p><strong>Price:</strong> ${{ticketPrice}}</p>
+            <p><strong>Seller:</strong> {{sellerName}}</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{{downloadUrl}}" class="download-btn">
+                📥 Download Your Ticket
+            </a>
+            <p style="color: #6c757d; font-size: 14px;">
+                Link expires in {{expiryTime}}
+            </p>
+        </div>
+
+        <div class="info-box" style="background: #fff3cd; border-left-color: #ffc107;">
+            <h3>⚠️ Important Information</h3>
+            <p>• This download link expires in <strong>{{expiryTime}}</strong></p>
+            <p>• Present your ticket at the venue entrance</p>
+            <p>• Keep this ticket secure and don't share the link</p>
+            <p>• Contact your seller if you have any issues</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Thank you for choosing <strong>{{sellerName}}</strong> for your ticket purchase!</p>
+        <p>If you have any questions, please contact your ticket seller directly.</p>
+        <p><em>This is an automated message, please do not reply to this email.</em></p>
+    </div>
+</body>
+</html>
