@@ -8,19 +8,11 @@
     {
       "src": "billet-frontend/package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "config": { "distDir": "dist" }
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/billet-backend/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/billet-frontend/dist/$1"
-    }
+    { "src": "/api/(.*)", "dest": "/billet-backend/server.js" },
+    { "src": "/(.*)", "dest": "/billet-frontend/dist/index.html" }
   ]
 }
