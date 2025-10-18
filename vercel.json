@@ -1,19 +1,26 @@
 {
-  "functions": {
-    "api/server.js": {
-      "runtime": "@vercel/node"
-    }
-  },
-  "buildCommand": "cd billet-frontend && npm run build",
-  "outputDirectory": "billet-frontend/dist",
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/server.js"
+      "src": "api/server.js",
+      "use": "@vercel/node"
     },
     {
-      "source": "/(.*)",
-      "destination": "/billet-frontend/dist/$1"
+      "src": "billet-frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/billet-frontend/dist/$1"
     }
   ],
   "headers": [
