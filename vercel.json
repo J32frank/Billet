@@ -1,10 +1,7 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "billet-backend/server.js",
-      "use": "@vercel/node"
-    },
+    { "src": "billet-backend/server.js", "use": "@vercel/node" },
     {
       "src": "billet-frontend/package.json",
       "use": "@vercel/static-build",
@@ -13,6 +10,6 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/billet-backend/server.js" },
-    { "src": "/(.*)", "dest": "/billet-frontend/dist/index.html" }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
