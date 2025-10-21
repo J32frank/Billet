@@ -1,0 +1,27 @@
+services:
+  # Backend API service
+  - type: web
+    name: billet-backend
+    runtime: node
+    buildCommand: cd billet-backend && npm install
+    startCommand: cd billet-backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        sync: false # Set this to your frontend URL after deployment
+
+  # Frontend service
+  - type: web
+    name: billet-frontend
+    runtime: static
+    buildCommand: cd billet-frontend && npm install && npm run build
+    staticPublishPath: ./billet-frontend/dist
+    envVars:
+      - key: VITE_BILLET_BACKEND_URL
+        fromService:
+          type: web
+          name: billet-backend
+          property: host

@@ -22,7 +22,15 @@ const EmailService = require('./src/services/emailService');
 const app = express();
 app.use(express.urlencoded({ extended: true}));
 app.use(helmet());
-app.use(cors());
+
+// CORS configuration for Render deployment
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Default to localhost for development
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/', (req, res) => {
