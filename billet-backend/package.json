@@ -12,8 +12,7 @@
     "pm2:start": "pm2 start server.js --name billet-api",
     "pm2:stop": "pm2 stop billet-api",
     "pm2:restart": "pm2 restart billet-api",
-    "pm2:logs": "pm2 logs billet-api",
-    "vercel-build": "npm run build"
+    "pm2:logs": "pm2 logs billet-api"
   },
   "keywords": [],
   "author": "",
