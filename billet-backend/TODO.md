@@ -23,3 +23,4 @@
 curl -X GET "http://localhost:3000/api/public/download/{ticketId}/{token}" \
   -H "Accept: image/png" \
   -o test-ticket.png
+r

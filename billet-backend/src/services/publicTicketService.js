@@ -2,6 +2,88 @@ const supabase = require('../config/database');
 const DownloadTokenService = require('./downloadTokenService');
 
 class PublicTicketService {
+    // Get ticket info for display on public download page
+    static async getTicketInfoByToken(ticketId, token) {
+        try {
+            console.log(`ℹ️  Ticket info request for: ${ticketId}`);
+            
+            // Validate token first
+            const tokenValidation = await DownloadTokenService.validateToken(token, ticketId);
+            if (!tokenValidation.valid) {
+                return {
+                    success: false,
+                    error: tokenValidation.error,
+                    code: 'INVALID_TOKEN',
+                    statusCode: 410
+                };
+            }
+            
+            // Get ticket details
+            const { data: ticket, error } = await supabase
+                .from('tickets')
+                .select(`
+                    ticket_number,
+                    buyer_name,
+                    buyer_phone,
+                    ticket_price,
+                    generated_at,
+                    cryptic_code,
+                    events (
+                        name,
+                        event_date,
+                        location
+                    ),
+                    sellers (
+                        name
+                    )
+                `)
+                .eq('id', ticketId)
+                .single();
+            
+            if (error || !ticket) {
+                return {
+                    success: false,
+                    error: 'Ticket not found',
+                    code: 'TICKET_NOT_FOUND',
+                    statusCode: 404
+                };
+            }
+            
+            // Calculate time remaining
+            const expiresAt = new Date(tokenValidation.tokenData.expires_at);
+            const timeRemaining = Math.max(0, Math.floor((expiresAt - new Date()) / 1000));
+            
+            return {
+                success: true,
+                data: {
+                    ticket: {
+                        number: ticket.ticket_number,
+                        buyer: ticket.buyer_name,
+                        phone: ticket.buyer_phone,
+                        price: ticket.ticket_price,
+                        generated: ticket.generated_at,
+                        cryptic_code: ticket.cryptic_code
+                    },
+                    event: ticket.events,
+                    seller: ticket.sellers,
+                    download: {
+                        timeRemaining,
+                        expiresAt: tokenValidation.tokenData.expires_at,
+                        isExpiringSoon: timeRemaining < 300 // 5 minutes
+                    }
+                }
+            };
+            
+        } catch (error) {
+            console.error('💥 Ticket info endpoint error:', error);
+            return {
+                success: false,
+                error: 'Failed to retrieve ticket information',
+                statusCode: 500
+            };
+        }
+    }
+    
     static async getTicketByToken(ticketId, token) {
         try {
             console.log(`🎫 Public ticket access: ${ticketId} with token: ${token}`);

@@ -92,7 +92,7 @@ const PublicTicketDownload = () => {
   const fetchTicketInfo = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${import.meta.env.VITE_BILLET_BACKEND_URL}/api/buyerRoutes/ticket/${ticketId}/${token}/info`);
+      const response = await fetch(`${import.meta.env.VITE_BILLET_BACKEND_URL}/api/public/ticket/${ticketId}/${token}/info`);
       const result = await response.json();
 
       if (result.success) {
@@ -102,6 +102,7 @@ const PublicTicketDownload = () => {
         setError(result.error);
       }
     } catch (err) {
+      console.error('Ticket info error:', err);
       setError('Failed to load ticket information');
     } finally {
       setLoading(false);
@@ -124,14 +125,15 @@ const PublicTicketDownload = () => {
   const handleDownload = async () => {
     try {
       setDownloading(true);
-      const response = await fetch(`${import.meta.env.VITE_BILLET_BACKEND_URL}/api/buyerRoutes/download/${ticketId}/${token}`);
+      // Using the correct endpoint from the backend routes
+      const response = await fetch(`${import.meta.env.VITE_BILLET_BACKEND_URL}/api/public/download/${ticketId}/${token}`);
       
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `ticket-${ticketData.ticket.number}.png`;
+        a.download = `ticket-${ticketData.ticket.number}.pdf`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -141,7 +143,8 @@ const PublicTicketDownload = () => {
         setError(errorData.error || 'Download failed');
       }
     } catch (err) {
-      setError('Download failed');
+      console.error('Download error:', err);
+      setError('Download failed. Please try again.');
     } finally {
       setDownloading(false);
     }

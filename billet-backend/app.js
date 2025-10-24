@@ -25,7 +25,9 @@ app.use(helmet());
 
 // CORS configuration for Render deployment
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Default to localhost for development
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL 
+    : '*', // Allow any origin in development, specific in production
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
